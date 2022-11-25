@@ -6,7 +6,7 @@
 /*   By: pgalvez- <pgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:09:26 by pgalvez-          #+#    #+#             */
-/*   Updated: 2022/11/25 18:33:58 by pgalvez-         ###   ########.fr       */
+/*   Updated: 2022/11/25 18:44:11 by pgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	min_cost_pos(int **lists, int size_a, int size_b)
 	return (pos_min);
 }
 
-int	moves_stack_a(int *sorted, int *stack, int size, int number)
+int	moves_stack_a(int *sorted, int *stack, int size, int number, int size_b)
 {
 	int	cont;
 
 	cont = 0;
-	if (sorted_pos(sorted, number, size_a + size_b) > sorted_pos(sorted, lists[0][0], size_a + size_b)
-				|| sorted_pos(sorted, lists[1][cont_b], size_a + size_b) < sorted_pos(sorted, lists[0][size_a - 1], size_a + size_b))
+	if (sorted_pos(sorted, number, size + size_b) > sorted_pos(sorted, stack[0], size + size_b)
+				|| sorted_pos(sorted, number, size + size_b) < sorted_pos(sorted, stack[size - 1], size + size_b))
 		cont++;
 	if (cont)
 		while (cont < size && !((number > stack[cont - 1]
@@ -102,7 +102,7 @@ void	get_to_pos(int **lists, int size_a, int size_b, int pos)
 	moves[1] = pos;
 	if (pos > size_b / 2)
 		moves[1] = -pos;
-	moves[0] = moves_stack_a(sorted, lists[0], size_a, lists[1][pos]);
+	moves[0] = moves_stack_a(sorted, lists[0], size_a, lists[1][pos], size_b);
 	if (moves[0] >= 0 && moves[1] >= 0)
 		moves_r(lists, size_a, size_b, moves);
 	else if (moves[0] <= 0 && moves[1] <= 0)
